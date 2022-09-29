@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/caseyvoss95/Coffee-M8-backend.git"
+  },
+  "author": "Team BREW",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/caseyvoss95/Coffee-M8-backend/issues"
+  },
+  "homepage": "https://github.com/caseyvoss95/Coffee-M8-backend#readme"
+}
