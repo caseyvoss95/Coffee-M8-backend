@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const starbucksDrink = require("../models/starbucksDrink.js").schema;
+const starbucksDrink = require("./starbucksDrink.js").schema;
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
