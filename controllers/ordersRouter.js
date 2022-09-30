@@ -52,7 +52,7 @@ ordersRouter.get("/allDrinks", async (req, res) => {
 /////////////////////////
 ordersRouter.post("/allUsers", async (req, res) => {
     try {
-        // create starbucks drink
+        // create user
         res.json(await Users.create(req.body));
     } catch (error) {
         //send error
@@ -61,7 +61,7 @@ ordersRouter.post("/allUsers", async (req, res) => {
 });
 ordersRouter.post("/allOrders", async (req, res) => {
     try {
-        // create starbucks drink
+        // create order
         res.json(await Orders.create(req.body));
     } catch (error) {
         //send error
@@ -97,6 +97,42 @@ ordersRouter.delete("/allDrinks/:id", async (req, res) => {
 ////////////////////////////
 ////////// UPDATE //////////
 ////////////////////////////
+
+ordersRouter.put("/allUsers/:id", async (req, res) => {
+    try {
+        // find user and update
+        res.json(
+            await Users.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        );
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
+ordersRouter.put("/allOrders/:id", async (req, res) => {
+    try {
+        // find user and update
+        res.json(
+            await Orders.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        );
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
+ordersRouter.put("/allDrinks/:id", async (req, res) => {
+    try {
+        // find user and update
+        res.json(
+            await StarbucksDrinks.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        );
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
 
 
 // Export Sessions Router
