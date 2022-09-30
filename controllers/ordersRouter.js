@@ -81,6 +81,20 @@ ordersRouter.post("/allDrinks", async (req, res) => {
 
 
 ////////////////////////////
+////////// DELETE //////////
+////////////////////////////
+ordersRouter.delete("/allDrinks/:id", async (req, res) => {
+    try{
+        // send all orders
+        res.json(await StarbucksDrinks.findByIdAndRemove(req.params.id));
+    } catch (error) {
+        // send error
+        res.status(400).json(error);
+    }
+})
+
+
+////////////////////////////
 ////////// UPDATE //////////
 ////////////////////////////
 
