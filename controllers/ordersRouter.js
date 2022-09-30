@@ -3,6 +3,8 @@ const express = require('express');
 const ordersRouter = express.Router();
 const { mongo, default: mongoose } = require('mongoose');
 const StarbucksDrinks = require('../models/starbucksDrink');
+const Orders = require('../models/order');
+const Users = require('../models/user');
 
 ordersRouter.use(express.static("Public"));
 
@@ -10,7 +12,29 @@ ordersRouter.use(express.static("Public"));
 ////////// INDEX //////////
 ///////////////////////////
 
-// display page for coffee orders
+// User API
+ordersRouter.get("/allUsers", async (req, res) => {
+    try {
+        // send all coffee order
+        res.json(await Users.find({}));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
+// Order API
+ordersRouter.get("/allOrders", async (req, res) => {
+    try {
+        // send all coffee order
+        res.json(await Orders.find({}));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
+// Product/Drink API
 ordersRouter.get("/allDrinks", async (req, res) => {
     try {
         // send all coffee
@@ -21,20 +45,29 @@ ordersRouter.get("/allDrinks", async (req, res) => {
     }
 });
 
-// coffee order index (current and prior orders)
-ordersRouter.get("/allOrders", async (req, res) => {
+
+
+/////////////////////////
+////////// NEW //////////
+/////////////////////////
+ordersRouter.post("/allUsers", async (req, res) => {
     try {
-        // send all coffee order
-        res.json(await Order.find({}));
+        // create starbucks drink
+        res.json(await Users.create(req.body));
     } catch (error) {
         //send error
         res.status(400).json(error);
     }
 });
-
-/////////////////////////
-////////// NEW //////////
-/////////////////////////
+ordersRouter.post("/allOrders", async (req, res) => {
+    try {
+        // create starbucks drink
+        res.json(await Orders.create(req.body));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
 
 ordersRouter.post("/allDrinks", async (req, res) => {
     try {
@@ -46,15 +79,6 @@ ordersRouter.post("/allDrinks", async (req, res) => {
     }
 });
 
-ordersRouter.post("/allOrders", async (req, res) => {
-    try {
-        // create starbucks drink
-        res.json(await StarbucksDrinks.create(req.body));
-    } catch (error) {
-        //send error
-        res.status(400).json(error);
-    }
-});
 
 ////////////////////////////
 ////////// UPDATE //////////
