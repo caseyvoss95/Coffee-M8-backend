@@ -8,6 +8,7 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
+const methodOverride = require('method-override');
 
 ///////////////////////////////
 // DATABASE CONNECTION
@@ -28,14 +29,12 @@ mongoose.connection
 app.use(cors()); // to prevent cors errors, open access to all origins
 app.use(morgan("dev")); // logging
 app.use(express.json()); // parse json bodies
+app.use(methodOverride('_method'));
 
-///////////////////////////////
-// ROUTES
-////////////////////////////////
-// create a test route
-app.get("/", (req, res) => {
-    res.send("hello world");
-});
+// Routes / Controllers
+const orderController = require('./controllers/ordersRouter.js');
+app.use('/orders', orderController);
+
 
 
 ///////////////////////////////

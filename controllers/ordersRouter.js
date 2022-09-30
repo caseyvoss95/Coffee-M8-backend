@@ -2,7 +2,7 @@
 const express = require('express');
 const ordersRouter = express.Router();
 const { mongo, default: mongoose } = require('mongoose');
-// const StarbucksDrinks = require('../models');
+const StarbucksDrinks = require('../models/starbucksDrink');
 
 ordersRouter.use(express.static("Public"));
 
@@ -25,7 +25,7 @@ ordersRouter.get("/", async (req, res) => {
 ordersRouter.get("/allOrders", async (req, res) => {
     try {
         // send all coffee
-        res.json(await Orders.find({}));
+        res.json(await Order.find({}));
     } catch (error) {
         //send error
         res.status(400).json(error);

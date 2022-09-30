@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const StarbucksDrinkSchema = new mongooseSchema({
+const StarbucksDrinkSchema = new mongoose.Schema({
     productType: { type: Array },
     productSize: { type: Array },
     milk: { type: Array },
