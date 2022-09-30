@@ -36,7 +36,7 @@ ordersRouter.get("/allOrders", async (req, res) => {
 ////////// NEW //////////
 /////////////////////////
 
-app.post("/allDrinks", async (req, res) => {
+ordersRouter.post("/allDrinks", async (req, res) => {
     try {
         // create starbucks drink
         res.json(await StarbucksDrinks.create(req.body));
@@ -46,7 +46,7 @@ app.post("/allDrinks", async (req, res) => {
     }
 });
 
-app.post("/allOrders", async (req, res) => {
+ordersRouter.post("/allOrders", async (req, res) => {
     try {
         // create starbucks drink
         res.json(await StarbucksDrinks.create(req.body));

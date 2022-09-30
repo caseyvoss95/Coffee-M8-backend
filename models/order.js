@@ -1,10 +1,14 @@
+// dependencies
 const mongoose = require("mongoose");
-const starbucksDrink = require("./starbucksDrink.js").schema;
+const StarbucksDrinks = require("./starbucksDrink.js").schema; 
 const Schema = mongoose.Schema;
 
+// order schema
 const orderSchema = new Schema({
     company: [String],
-    products: [starbucksDrink],
+    products: [StarbucksDrinks],
+    orderNum: {type: Number},
+    
 
 
 });
