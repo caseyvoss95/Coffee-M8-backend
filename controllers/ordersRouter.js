@@ -83,15 +83,40 @@ ordersRouter.post("/allDrinks", async (req, res) => {
 ////////////////////////////
 ////////// DELETE //////////
 ////////////////////////////
+
+// delete drink
 ordersRouter.delete("/allDrinks/:id", async (req, res) => {
-    try{
-        // send all orders
+    try {
+        // send all drinks
         res.json(await StarbucksDrinks.findByIdAndRemove(req.params.id));
     } catch (error) {
         // send error
         res.status(400).json(error);
     }
-})
+});
+
+// delete user
+ordersRouter.delete("/allUsers/:id", async (req, res) => {
+    try {
+        // send all users
+        res.json(await Users.findByIdAndRemove(req.params.id));
+    } catch (error) {
+        // send error
+        res.status(400).json(error);
+    }
+});
+
+// delete order
+ordersRouter.delete("/allOrders/:id", async (req, res) => {
+    try {
+        // send all orders
+        res.json(await Orders.findByIdAndRemove(req.params.id));
+    } catch (error) {
+        // send error
+        res.status(400).json(error);
+    }
+});
+
 
 
 ////////////////////////////
