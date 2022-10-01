@@ -96,6 +96,18 @@ ordersRouter.put("/allUsers/:id", async (req, res) => {
     }
 });
 
+ordersRouter.put("/allOrders/:id/addCustomizedDrink", async (req, res) => {
+    try {
+        // Update Order with User Created Drink!!!!
+        res.json(
+            await Orders.findByIdAndUpdate(req.params.id, { $push: { "groupOrder": req.body } }, { new: true })
+        );
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
 ordersRouter.put("/allOrders/:id", async (req, res) => {
     try {
         // find user and update
