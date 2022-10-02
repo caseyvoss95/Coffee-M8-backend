@@ -2,6 +2,7 @@
 const mongoose = require("mongoose");
 const StarbucksDrinks = require("./starbucksDrink.js").schema;
 const Users = require("./user.js").schema;
+const CustomizedDrinks = require("./customizedDrink").schema
 
 const Schema = mongoose.Schema;
 
@@ -11,7 +12,7 @@ const OrderSchema = new Schema({
     products: [{ type: StarbucksDrinks }],
     orderNum: { type: Number },
     scheduledTimeOfOrder: { type: Date },
-    groupOrder: { type: Array },
+    groupOrder: [{ type: CustomizedDrinks }],
     groupList: [{ type: Users }]
 });
 
