@@ -170,15 +170,42 @@ ordersRouter.post("/allUsers", async (req, res) => {
     }
 });
 
+// *********************************************************************************************
+// *********************************************************************************************
+//  (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$)
+
 ordersRouter.post("/allOrders", async (req, res) => {
     try {
         // Create New (Group) Order
-        res.json(await Orders.create(req.body));
+        res.json(await Orders.create(req.body, function (err, docs) {
+            ordersId = docs._id
+            // console.log(ordersId)
+            // Create New User for each invitee
+            docs.groupInvite.forEach((invite) => {
+                Users.find({ "email": invite }, function (err, foundUser) {
+                    // if User exists, push Order to Order's array
+                    if (typeof (foundUser[0]) === "object") {
+                        console.log(foundUser[0]._id)
+                        Users.findByIdAndUpdate(foundUser[0]._id, { $push: { "orderIds": ordersId } }, { new: true }, (err, updated) => {
+                            // console.log(updated)
+                            // console.log(err)
+                        })
+                    } else {
+                        // create new user
+                        console.log("notfound!")
+                        Users.create({ "email": invite, "orderIds": ordersId, "isHost": false });
+                    }
+                })
+            })
+        }));
     } catch (error) {
         //send error
         res.status(400).json(error);
     }
 });
+
+// *********************************************************************************************
+// *********************************************************************************************
 
 ordersRouter.post("/allItems", async (req, res) => {
     try {
