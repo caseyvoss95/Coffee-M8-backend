@@ -12,7 +12,7 @@ const OrderSchema = new Schema({
     products: [{ type: StarbucksMenu }],
     orderNum: { type: Number },
     scheduledTimeOfOrder: { type: Date },
-    groupOrder: [{ type: mongoose.ObjectId }],
+    groupInvite: [{ type: String }],
     groupList: [{ type: mongoose.ObjectId }]
 });
 

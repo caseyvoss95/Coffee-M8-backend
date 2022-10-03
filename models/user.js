@@ -5,7 +5,6 @@ const UserSchema = new mongoose.Schema({
     password: { type: String },
     orderIds: [{ type: mongoose.ObjectId }],
     isHost: { type: Boolean },
-    group: { type: Array }
 });
 
 const User = mongoose.model("User", UserSchema);
