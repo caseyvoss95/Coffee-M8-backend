@@ -2,21 +2,22 @@
 const express = require('express');
 const ordersRouter = express.Router();
 const { mongo, default: mongoose } = require('mongoose');
-const StarbucksDrinks = require('../models/starbucksDrink');
+const StarbucksMenu = require('../models/starbucksMenu');
 const Orders = require('../models/order');
 const Users = require('../models/user');
-const CustomizedDrinks = require('../models/customizedDrink')
+const CustomizedItems = require('../models/customizedItem');
+
 
 ordersRouter.use(express.static("Public"));
 
-///////////////////////////
-////////// INDEX //////////
-///////////////////////////
+//||||||||||||||||||||||||||||||||
+//*********** INDEX **************
+//||||||||||||||||||||||||||||||||
 
 // User API
 ordersRouter.get("/allUsers", async (req, res) => {
     try {
-        // send all coffee order
+        // displays all Users API
         res.json(await Users.find({}));
     } catch (error) {
         //send error
@@ -27,7 +28,7 @@ ordersRouter.get("/allUsers", async (req, res) => {
 // Order API
 ordersRouter.get("/allOrders", async (req, res) => {
     try {
-        // send all coffee order
+        // displays all Orders API
         res.json(await Orders.find({}));
     } catch (error) {
         //send error
@@ -35,98 +36,35 @@ ordersRouter.get("/allOrders", async (req, res) => {
     }
 });
 
-// Product/Drink API
-ordersRouter.get("/allDrinks", async (req, res) => {
+// Customized Items API
+ordersRouter.get("/allItems", async (req, res) => {
     try {
-        // send all coffee
-        res.json(await StarbucksDrinks.find({}));
+        // displays all User Customized Items API
+        res.json(await CustomizedItems.find({}));
     } catch (error) {
         //send error
         res.status(400).json(error);
     }
 });
 
-
-
-/////////////////////////
-////////// NEW //////////
-/////////////////////////
-ordersRouter.post("/allUsers", async (req, res) => {
+// Starbucks Menu API
+ordersRouter.get("/allMenu", async (req, res) => {
     try {
-        // create user
-        res.json(await Users.create(req.body));
-    } catch (error) {
-        //send error
-        res.status(400).json(error);
-    }
-});
-ordersRouter.post("/allOrders", async (req, res) => {
-    try {
-        // create order
-        res.json(await Orders.create(req.body));
+        // displays all Starbucks Drink Menu API
+        res.json(await StarbucksMenu.find({}));
     } catch (error) {
         //send error
         res.status(400).json(error);
     }
 });
 
-ordersRouter.post("/allDrinks", async (req, res) => {
-    try {
-        // create starbucks drink
-        res.json(await StarbucksDrinks.create(req.body));
-    } catch (error) {
-        //send error
-        res.status(400).json(error);
-    }
-});
-
-
-////////////////////////////
-////////// DELETE //////////
-////////////////////////////
-
-// delete drink
-ordersRouter.delete("/allDrinks/:id", async (req, res) => {
-    try {
-        // send all drinks
-        res.json(await StarbucksDrinks.findByIdAndRemove(req.params.id));
-    } catch (error) {
-        // send error
-        res.status(400).json(error);
-    }
-});
-
-// delete user
-ordersRouter.delete("/allUsers/:id", async (req, res) => {
-    try {
-        // send all users
-        res.json(await Users.findByIdAndRemove(req.params.id));
-    } catch (error) {
-        // send error
-        res.status(400).json(error);
-    }
-});
-
-// delete order
-ordersRouter.delete("/allOrders/:id", async (req, res) => {
-    try {
-        // send all orders
-        res.json(await Orders.findByIdAndRemove(req.params.id));
-    } catch (error) {
-        // send error
-        res.status(400).json(error);
-    }
-});
-
-
-
-////////////////////////////
-////////// UPDATE //////////
-////////////////////////////
+//||||||||||||||||||||||||||||||||
+//*********** UPDATE *************
+//||||||||||||||||||||||||||||||||
 
 ordersRouter.put("/allUsers/:id", async (req, res) => {
     try {
-        // find user and update
+        // Find User and & Update
         res.json(
             await Users.findByIdAndUpdate(req.params.id, req.body, { new: true })
         );
@@ -136,21 +74,10 @@ ordersRouter.put("/allUsers/:id", async (req, res) => {
     }
 });
 
-ordersRouter.put("/allOrders/:id/addCustomizedDrink", async (req, res) => {
-    try {
-        // Update Order with User Created Drink!!!!
-        res.json(
-            await Orders.findByIdAndUpdate(req.params.id, { $push: { "groupOrder": req.body } }, { new: true })
-        );
-    } catch (error) {
-        //send error
-        res.status(400).json(error);
-    }
-})
 
 ordersRouter.put("/allOrders/:id", async (req, res) => {
     try {
-        // find user and update
+        // Find Order & Update
         res.json(
             await Orders.findByIdAndUpdate(req.params.id, req.body, { new: true })
         );
@@ -160,11 +87,11 @@ ordersRouter.put("/allOrders/:id", async (req, res) => {
     }
 });
 
-ordersRouter.put("/allDrinks/:id", async (req, res) => {
+ordersRouter.put("/allItems/:id", async (req, res) => {
     try {
-        // find user and update
+        // Find Customized Item & Update
         res.json(
-            await StarbucksDrinks.findByIdAndUpdate(req.params.id, req.body, { new: true })
+            await CustomizedItems.findByIdAndUpdate(req.params.id, req.body, { new: true })
         );
     } catch (error) {
         //send error
@@ -172,6 +99,135 @@ ordersRouter.put("/allDrinks/:id", async (req, res) => {
     }
 });
 
+ordersRouter.put("/allMenu/:id", async (req, res) => {
+    try {
+        // Find Starbucks Drink Menu & Update Item
+        res.json(
+            await StarbucksMenu.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        );
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
+//||||||||||||||||||||||||||||||||
+//*********** DELETE *************
+//||||||||||||||||||||||||||||||||
+
+
+// Delete User
+ordersRouter.delete("/allUsers/:id", async (req, res) => {
+    try {
+        res.json(await Users.findByIdAndRemove(req.params.id));
+    } catch (error) {
+        // send error
+        res.status(400).json(error);
+    }
+});
+
+// Delete Order
+ordersRouter.delete("/allOrders/:id", async (req, res) => {
+    try {
+        res.json(await Orders.findByIdAndRemove(req.params.id));
+    } catch (error) {
+        // send error
+        res.status(400).json(error);
+    }
+});
+
+// Delete Customized Item
+ordersRouter.delete("/allItems/:id", async (req, res) => {
+    try {
+        res.json(await CustomizedItems.findByIdAndRemove(req.params.id));
+    } catch (error) {
+        // send error
+        res.status(400).json(error);
+    }
+});
+
+// Delete Menu Item
+ordersRouter.delete("/allMenu/:id", async (req, res) => {
+    try {
+        res.json(await StarbucksMenu.findByIdAndRemove(req.params.id));
+    } catch (error) {
+        // send error
+        res.status(400).json(error);
+    }
+});
+
+
+//||||||||||||||||||||||||||||||||
+//********** CREATE **************
+//||||||||||||||||||||||||||||||||
+ordersRouter.post("/allUsers", async (req, res) => {
+    try {
+        // Create New User
+        res.json(await Users.create(req.body));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
+ordersRouter.post("/allOrders", async (req, res) => {
+    try {
+        // Create New (Group) Order
+        res.json(await Orders.create(req.body));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
+ordersRouter.post("/allItems", async (req, res) => {
+    try {
+        // Create New Customized Item
+        res.json(await CustomizedItems.create(req.body));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+})
+
+ordersRouter.post("/allMenu", async (req, res) => {
+    try {
+        // Create Starbucks Menu Item
+        res.json(await StarbucksMenu.create(req.body));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
+//||||||||||||||||||||||||||||||||
+//************ SHOW **************
+//||||||||||||||||||||||||||||||||
+
+ordersRouter.get("/allOrders/:id", async (req, res) => {
+    try {
+        // 
+        res.json(await Orders.find({ "_id": req.params.id }));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+// *********************************************************************************************
+// *********************************************************************************************
+//  (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$)
+
+// Show all Items that Match Order ID!!!
+ordersRouter.get("/allItems/:orderId", async (req, res) => {
+    try {
+        res.json(await CustomizedItems.find({ "orderId": req.params.orderId }));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+// *********************************************************************************************
+// *********************************************************************************************
 
 // Export Sessions Router
 module.exports = ordersRouter;

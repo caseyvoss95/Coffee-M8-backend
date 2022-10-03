@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 
-const StarbucksDrinkSchema = new mongoose.Schema({
+const StarbucksMenuSchema = new mongoose.Schema({
     productName: { type: String },
-    productType: { type: Array },
     productSize: { type: Array },
     productImage: { type: String },
     milk: { type: Array },
@@ -10,6 +9,6 @@ const StarbucksDrinkSchema = new mongoose.Schema({
     toppings: { type: Array },
 });
 
-const StarbucksDrinks = mongoose.model("StarbucksDrinks", StarbucksDrinkSchema);
+const StarbucksMenu = mongoose.model("StarbucksMenu", StarbucksMenuSchema);
 
-module.exports = StarbucksDrinks;
+module.exports = StarbucksMenu;
