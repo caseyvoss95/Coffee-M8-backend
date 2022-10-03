@@ -73,24 +73,6 @@ ordersRouter.put("/allUsers/:id", async (req, res) => {
     }
 });
 
-// *********************************************************************************************
-// *********************************************************************************************
-//  (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$)
-
-ordersRouter.put("/allOrders/:id/addCustomizedDrink", async (req, res) => {
-    try {
-        // Update Order with User Created Drink !!!!
-        res.json(
-            await Orders.findByIdAndUpdate(req.params.id, { $push: { "groupOrder": req.body } }, { new: true })
-        );
-    } catch (error) {
-        //send error
-        res.status(400).json(error);
-    }
-})
-//  (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$)
-// *********************************************************************************************
-// *********************************************************************************************
 
 ordersRouter.put("/allOrders/:id", async (req, res) => {
     try {
@@ -220,6 +202,7 @@ ordersRouter.post("/allMenu", async (req, res) => {
 //||||||||||||||||||||||||||||||||
 //************ SHOW **************
 //||||||||||||||||||||||||||||||||
+
 ordersRouter.get("/allOrders/:id", async (req, res) => {
     try {
         // 
@@ -229,15 +212,21 @@ ordersRouter.get("/allOrders/:id", async (req, res) => {
         res.status(400).json(error);
     }
 });
+// *********************************************************************************************
+// *********************************************************************************************
+//  (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$)
 
+// Show all Items that Match Order ID!!!
 ordersRouter.get("/allItems/:orderId", async (req, res) => {
     try {
-        // 
         res.json(await CustomizedItems.find({ "orderId": req.params.orderId }));
     } catch (error) {
         //send error
         res.status(400).json(error);
     }
 });
+// *********************************************************************************************
+// *********************************************************************************************
+
 // Export Sessions Router
 module.exports = ordersRouter;
