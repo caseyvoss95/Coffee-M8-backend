@@ -5,6 +5,7 @@ const { mongo, default: mongoose } = require('mongoose');
 const StarbucksDrinks = require('../models/starbucksDrink');
 const Orders = require('../models/order');
 const Users = require('../models/user');
+const CustomizedDrinks = require('../models/customizedDrink')
 
 ordersRouter.use(express.static("Public"));
 
@@ -145,7 +146,7 @@ ordersRouter.put("/allOrders/:id/addCustomizedDrink", async (req, res) => {
         //send error
         res.status(400).json(error);
     }
-});
+})
 
 ordersRouter.put("/allOrders/:id", async (req, res) => {
     try {
