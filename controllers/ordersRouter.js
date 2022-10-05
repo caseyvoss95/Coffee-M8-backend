@@ -253,6 +253,17 @@ ordersRouter.get("/allItems/:orderId", async (req, res) => {
         res.status(400).json(error);
     }
 });
+
+// show all items a user ordered
+ordersRouter.get("/allItems/findUser/:userId", async (req, res) => {
+    try {
+        res.json(await CustomizedItems.find({ "userId": req.params.userId }));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
 // *********************************************************************************************
 // *********************************************************************************************
 
