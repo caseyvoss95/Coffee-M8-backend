@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const CustomizedItemSchema = new mongoose.Schema({
-    userId: { type: mongoose.ObjectId },
+    userId: { type: String },
     orderId: { type: mongoose.ObjectId },
     productName: { type: String },
     productSize: { type: String },
