@@ -265,9 +265,9 @@ ordersRouter.get("/allItems/findUser/:userId", async (req, res) => {
 });
 
 // show all Orders a Host Created
-ordersRouter.get("/allOrders/findHost/:userId", async (req, res) => {
+ordersRouter.get("/allOrders/findHost/:hostId", async (req, res) => {
     try {
-        res.json(await CustomizedItems.find({ "userId": req.params.userId }));
+        res.json(await Orders.find({ "host": req.params.userId }));
     } catch (error) {
         //send error
         res.status(400).json(error);
