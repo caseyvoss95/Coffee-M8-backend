@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
     email: { type: String },
-    password: { type: String },
     orderIds: [{ type: mongoose.ObjectId }],
     isHost: { type: Boolean },
 });

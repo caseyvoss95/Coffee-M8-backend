@@ -58,6 +58,78 @@ ordersRouter.get("/allMenu", async (req, res) => {
     }
 });
 
+
+//||||||||||||||||||||||||||||||||
+//********** CREATE **************
+//||||||||||||||||||||||||||||||||
+ordersRouter.post("/allUsers", async (req, res) => {
+    try {
+        // Create New User
+        res.json(await Users.create(req.body));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
+// *********************************************************************************************
+// *********************************************************************************************
+//  (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$)
+
+ordersRouter.post("/allOrders", async (req, res) => {
+    try {
+        // Create New (Group) Order
+        res.json(await Orders.create(req.body, function (err, docs) {
+            ordersId = docs._id
+            // console.log(ordersId)
+            // Create New User for each invitee
+            docs.groupInvite.forEach((invite) => {
+                Users.find({ "email": invite }, function (err, foundUser) {
+                    // if User exists, push Order to Order's array
+                    if (typeof (foundUser[0]) === "object") {
+                        console.log(foundUser[0]._id)
+                        Users.findByIdAndUpdate(foundUser[0]._id, { $push: { "orderIds": ordersId } }, { new: true }, (err, updated) => {
+                            // console.log(updated)
+                            // console.log(err)
+                        })
+                    } else {
+                        // create new user
+                        console.log("notfound!")
+                        Users.create({ "email": invite, "orderIds": ordersId, "isHost": false });
+                    }
+                })
+            })
+            return (console.log(ordersId))
+        }));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
+// *********************************************************************************************
+// *********************************************************************************************
+
+ordersRouter.post("/allItems", async (req, res) => {
+    try {
+        // Create New Customized Item
+        res.json(await CustomizedItems.create(req.body));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+})
+
+ordersRouter.post("/allMenu", async (req, res) => {
+    try {
+        // Create Starbucks Menu Item
+        res.json(await StarbucksMenu.create(req.body));
+    } catch (error) {
+        //send error
+        res.status(400).json(error);
+    }
+});
+
 //||||||||||||||||||||||||||||||||
 //*********** UPDATE *************
 //||||||||||||||||||||||||||||||||
@@ -157,75 +229,6 @@ ordersRouter.delete("/allMenu/:id", async (req, res) => {
 });
 
 
-//||||||||||||||||||||||||||||||||
-//********** CREATE **************
-//||||||||||||||||||||||||||||||||
-ordersRouter.post("/allUsers", async (req, res) => {
-    try {
-        // Create New User
-        res.json(await Users.create(req.body));
-    } catch (error) {
-        //send error
-        res.status(400).json(error);
-    }
-});
-
-// *********************************************************************************************
-// *********************************************************************************************
-//  (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$) (^_^) [o_o] (^.^) (".") ($.$)
-
-ordersRouter.post("/allOrders", async (req, res) => {
-    try {
-        // Create New (Group) Order
-        res.json(await Orders.create(req.body, function (err, docs) {
-            ordersId = docs._id
-            // console.log(ordersId)
-            // Create New User for each invitee
-            docs.groupInvite.forEach((invite) => {
-                Users.find({ "email": invite }, function (err, foundUser) {
-                    // if User exists, push Order to Order's array
-                    if (typeof (foundUser[0]) === "object") {
-                        console.log(foundUser[0]._id)
-                        Users.findByIdAndUpdate(foundUser[0]._id, { $push: { "orderIds": ordersId } }, { new: true }, (err, updated) => {
-                            // console.log(updated)
-                            // console.log(err)
-                        })
-                    } else {
-                        // create new user
-                        console.log("notfound!")
-                        Users.create({ "email": invite, "orderIds": ordersId, "isHost": false });
-                    }
-                })
-            })
-        }));
-    } catch (error) {
-        //send error
-        res.status(400).json(error);
-    }
-});
-
-// *********************************************************************************************
-// *********************************************************************************************
-
-ordersRouter.post("/allItems", async (req, res) => {
-    try {
-        // Create New Customized Item
-        res.json(await CustomizedItems.create(req.body));
-    } catch (error) {
-        //send error
-        res.status(400).json(error);
-    }
-})
-
-ordersRouter.post("/allMenu", async (req, res) => {
-    try {
-        // Create Starbucks Menu Item
-        res.json(await StarbucksMenu.create(req.body));
-    } catch (error) {
-        //send error
-        res.status(400).json(error);
-    }
-});
 
 //||||||||||||||||||||||||||||||||
 //************ SHOW **************
