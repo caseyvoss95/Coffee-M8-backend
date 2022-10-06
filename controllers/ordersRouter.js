@@ -193,7 +193,7 @@ ordersRouter.post("/allOrders", async (req, res) => {
                     } else {
                         // create new user
                         console.log("notfound!")
-                        Users.create({ "email": invite, "orderIds": ordersId, "isHost": false });
+                        Users.create({ "email": invite, "orderIds": ordersId });
                     }
                 })
             })
